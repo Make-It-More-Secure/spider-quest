@@ -1,85 +1,115 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#ffd166">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon-192.png">
-<title>Spider Quest (PWA)</title>
-<link rel="stylesheet" href="style.css">
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#ffd166"/>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png">
+  <title>Spider Quest (PWA)</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="app">
-  <header>
-    <h1>🕷️ Spider Quest</h1>
-    <p>Play. Learn. Earn badges. (2nd–3rd grade)</p>
-    <div class="controls">
-      <button id="btnInstall" class="ghost">Install App</button>
-      <button id="btnDashboard">Parent/Teacher Dashboard</button>
-      <button id="btnBooks">Books (Download PDFs)</button>
-      <label class="switch">
-        <input type="checkbox" id="audioToggle" checked><span class="slider"></span>
-      </label><span class="label">Audio</span>
-    </div>
-  </header>
-  <nav>
-    <button id="btnGarden">Sunny Garden (Web Builder)</button>
-    <button id="btnBackyard">Backyard at Night (Bug Catcher)</button>
-    <button id="btnQuiz">Fact Frenzy (Quiz)</button>
-    <button id="btnReset">Reset</button>
-  </nav>
-  <section id="hud">
-    <div id="badgeBar">Badges: <span id="badges"></span></div>
-    <div id="factCard">Tip: Spiders have two body parts!</div>
-  </section>
-  <main><canvas id="gameCanvas" width="900" height="600"></canvas></main>
-  <footer><small>Spider Quest • PWA • Works offline after first load</small></footer>
-</div>
+  <div id="app">
+    <header>
+      <h1>🕷️ Spider Quest</h1>
+      <p>Play. Learn. Earn badges. (2nd–3rd grade)</p>
+      <div class="controls">
+        <button id="btnInstall" class="ghost" style="display:none">Install App</button>
+        <button id="btnDashboard">Parent/Teacher Dashboard</button>
+        <button id="btnBooks">Books (Download PDFs)</button>
+        <label class="switch">
+          <input type="checkbox" id="audioToggle" checked>
+          <span class="slider"></span>
+        </label>
+        <span class="label">Audio</span>
+      </div>
+    </header>
 
-<!-- Dashboard Modal -->
-<div id="modal" class="modal hidden">
-  <div class="modal-content">
-    <div class="modal-header"><h2>Parent/Teacher Dashboard</h2><button id="closeModal" class="close">✕</button></div>
-    <div class="modal-body">
-      <section class="panel"><h3>Progress</h3><ul id="progressList"></ul></section>
-      <section class="panel"><h3>Learning Stats</h3>
-        <div id="stats">
-          <p>Total Play Time: <span id="statTime">0m</span></p>
-          <p>Quizzes Completed: <span id="statQuizzes">0</span></p>
-          <p>Correct Answers: <span id="statCorrect">0</span></p>
-          <p>Bug Catch Scores (last 5): <span id="statBugs">-</span></p>
-        </div>
-      </section>
-      <section class="panel"><h3>Controls</h3>
-        <div class="controls-row"><label>Audio:</label><input type="checkbox" id="dashAudioToggle" checked></div>
-        <div class="controls-row"><label>Reset All Progress:</label><button id="dashReset" class="danger">Reset</button></div>
-      </section>
+    <nav>
+      <button id="btnGarden">Sunny Garden (Web Builder)</button>
+      <button id="btnBackyard">Backyard at Night (Bug Catcher)</button>
+      <button id="btnQuiz">Fact Frenzy (Quiz)</button>
+      <button id="btnReset">Reset</button>
+    </nav>
+
+    <section id="hud">
+      <div id="badgeBar">Badges: <span id="badges"></span></div>
+      <div id="factCard">Tip: Spiders have two body parts!</div>
+    </section>
+
+    <main>
+      <canvas id="gameCanvas" width="900" height="600"></canvas>
+    </main>
+
+    <footer>
+      <small>Spider Quest • PWA • Works offline after first load</small>
+    </footer>
+  </div>
+
+  <!-- Dashboard Modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Parent/Teacher Dashboard</h2>
+        <button id="closeModal" class="close">✕</button>
+      </div>
+      <div class="modal-body">
+        <section class="panel">
+          <h3>Progress</h3>
+          <ul id="progressList"></ul>
+        </section>
+        <section class="panel">
+          <h3>Learning Stats</h3>
+          <div id="stats">
+            <p>Total Play Time: <span id="statTime">0m</span></p>
+            <p>Quizzes Completed: <span id="statQuizzes">0</span></p>
+            <p>Correct Answers: <span id="statCorrect">0</span></p>
+            <p>Bug Catch Scores (last 5): <span id="statBugs">-</span></p>
+          </div>
+        </section>
+        <section class="panel">
+          <h3>Controls</h3>
+          <div class="controls-row">
+            <label>Audio:</label>
+            <input type="checkbox" id="dashAudioToggle" checked>
+          </div>
+          <div class="controls-row">
+            <label>Reset All Progress:</label>
+            <button id="dashReset" class="danger">Reset</button>
+          </div>
+        </section>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Books Modal -->
-<div id="modalBooks" class="modal hidden">
-  <div class="modal-content">
-    <div class="modal-header"><h2>Download the Books</h2><button id="closeModalBooks" class="close">✕</button></div>
-    <div class="modal-body" style="grid-template-columns:1fr;">
-      <section class="panel">
-        <h3>Choose a format</h3>
-        <p>Both options are embedded (works offline) and also available in the <code>/books</code> folder.</p>
-        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-          <button id="dlSquare" style="background:#90ee90; border:0; padding:10px 14px; border-radius:12px; font-weight:700; cursor:pointer;">Download 8.5×8.5 (Square)</button>
-          <button id="openSquare" style="background:#ffe680; border:0; padding:10px 14px; border-radius:12px; font-weight:700; cursor:pointer;">Open in New Tab (Square)</button>
-          <button id="dlPortrait" style="background:#add8e6; border:0; padding:10px 14px; border-radius:12px; font-weight:700; cursor:pointer;">Download 8×10 (Portrait)</button>
-          <button id="openPortrait" style="background:#ffe680; border:0; padding:10px 14px; border-radius:12px; font-weight:700; cursor:pointer;">Open in New Tab (Portrait)</button>
-        </div>
-        <h4 style="margin-top:10px;">Direct File Links (Right-click → “Save Link As…”) </h4>
-        <ul>
-          <li><a href="./books/Spiders_Eight_Legs_of_Awesome_8p5x8p5.pdf" target="_blank">Open Raw File (Square)</a></li>
-          <li><a href="./books/Spiders_Eight_Legs_of_Awesome_8x10.pdf" target="_blank">Open Raw File (Portrait)</a></li>
-        </ul>
-      </section>
+  <!-- Books Modal -->
+  <div id="modalBooks" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Download the Books</h2>
+        <button id="closeModalBooks" class="close">✕</button>
+      </div>
+      <div class="modal-body" style="grid-template-columns:1fr;">
+        <section class="panel">
+          <h3>Choose a format</h3>
+          <p>Both options are embedded (works offline) and also available in the <code>/books</code> folder.</p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <button id="dlSquare"   class="pill green">Download 8.5×8.5 (Square)</button>
+            <button id="openSquare" class="pill yellow">Open in New Tab (Square)</button>
+            <button id="dlPortrait" class="pill blue">Download 8×10 (Portrait)</button>
+            <button id="openPortrait" class="pill yellow">Open in New Tab (Portrait)</button>
+          </div>
+          <h4 style="margin-top:10px;">Direct File Links (Right-click → “Save Link As…”) </h4>
+          <ul>
+            <li><a href="./books/Spiders_Eight_Legs_of_Awesome_8p5x8p5.pdf" target="_blank">Open Raw File (Square)</a></li>
+            <li><a href="./books/Spiders_Eight_Legs_of_Awesome_8x10.pdf" target="_blank">Open Raw File (Portrait)</a></li>
+          </ul>
+        </section>
+      </div>
     </div>
   </div>
-</div>
 
-<script src="script.js"></script>
-</body></html>
+  <script src="script.js"></script>
+</body>
+</html>
