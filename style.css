@@ -1,0 +1,32 @@
+*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:linear-gradient(180deg,#fff7e6,#ffe6f2);color:#222}
+header{text-align:center;padding:12px 10px}
+h1{margin:6px 0}
+.controls{display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:6px}
+nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:8px}
+nav button{padding:10px 14px;border:0;border-radius:12px;background:#8be9fd;cursor:pointer;font-weight:700}
+nav button:hover{transform:translateY(-2px)}
+#hud{display:flex;justify-content:space-between;gap:8px;padding:0 16px;align-items:center}
+#badgeBar{padding:6px 10px;background:#ffd166;border-radius:8px}
+#factCard{padding:6px 10px;background:#caffbf;border-radius:8px}
+main{display:flex;justify-content:center;padding:12px}
+canvas{border:6px solid #ff6;border-radius:12px;background:#fefefe;box-shadow:0 6px 18px rgba(0,0,0,.15)}
+footer{text-align:center;padding:10px;color:#444}
+.ghost{background:#eee}
+.switch{position:relative;display:inline-block;width:54px;height:28px}
+.switch input{display:none}
+.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#ccc;transition:.2s;border-radius:28px}
+.slider:before{position:absolute;content:"";height:22px;width:22px;left:3px;bottom:3px;background:white;transition:.2s;border-radius:50%}
+input:checked + .slider{background:#4CAF50}
+input:checked + .slider:before{transform:translateX(26px)}
+.label{font-size:14px;margin-left:4px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;padding:12px}
+.modal.hidden{display:none}
+.modal-content{background:#fff;border-radius:14px;max-width:900px;width:100%;box-shadow:0 8px 24px rgba(0,0,0,.2);overflow:hidden}
+.modal-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#ffd166}
+.modal-body{display:grid;gap:12px;grid-template-columns:1fr 1fr; padding:16px}
+.panel{background:#fffaf0;border:2px dashed #ffb703;border-radius:12px;padding:12px}
+.close{background:#0000;border:0;font-size:20px;cursor:pointer}
+.danger{background:#ff6b6b;color:#fff;border:0;padding:8px 12px;border-radius:10px;cursor:pointer}
+.controls-row{display:flex;align-items:center;gap:12px;margin-top:6px}
+@media (max-width:800px){.modal-body{grid-template-columns:1fr}}
