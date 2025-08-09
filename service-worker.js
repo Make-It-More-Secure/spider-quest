@@ -7,7 +7,7 @@ const ASSETS = [
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
-  // Raw PDFs (if NOT using Git LFS)
+  // Raw PDFs (works only if NOT in Git LFS)
   './books/Spiders_Eight_Legs_of_Awesome_8p5x8p5.pdf',
   './books/Spiders_Eight_Legs_of_Awesome_8x10.pdf'
 ];

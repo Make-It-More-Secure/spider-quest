@@ -1,5 +1,4 @@
 (() => {
-  // Helpful console log
   console.log("Spider Quest booting…");
 
   // PWA install + SW
@@ -36,42 +35,37 @@
   const factCard = document.getElementById('factCard');
   const audioToggle = document.getElementById('audioToggle');
 
-  // === Embedded PDFs (base64) ===
-  // If you rebuilt with build_spider_quest.py, these get populated.
-  // If you’re copying manually and don’t see data: URIs appear below,
-  // re-run the builder or I can paste them in for you.
-  const PDF_EMBED = window.PDF_EMBED || {
-    square: null,
-    portrait: null
-  };
+  // ===== Books (plain file links) =====
+  const BOOK_SQUARE = './books/Spiders_Eight_Legs_of_Awesome_8p5x8p5.pdf';
+  const BOOK_PORTRAIT = './books/Spiders_Eight_Legs_of_Awesome_8x10.pdf';
 
-  function ensurePdfEmbed() {
-    if (!PDF_EMBED.square || !PDF_EMBED.portrait) {
-      console.warn('PDF_EMBED missing. Using raw file links only.');
-      return false;
-    }
-    return true;
-  }
+  const btnBooks = document.getElementById('btnBooks');
+  const modalBooks = document.getElementById('modalBooks');
+  const closeModalBooks = document.getElementById('closeModalBooks');
+  const dlSquare = document.getElementById('dlSquare');
+  const dlPortrait = document.getElementById('dlPortrait');
+  const openSquare = document.getElementById('openSquare');
+  const openPortrait = document.getElementById('openPortrait');
 
-  function downloadDataUrl(filename, dataUrl) {
+  btnBooks.addEventListener('click', () => modalBooks.classList.remove('hidden'));
+  closeModalBooks.addEventListener('click', () => modalBooks.classList.add('hidden'));
+
+  function downloadFile(href, filename) {
     const a = document.createElement('a');
-    a.href = dataUrl;
+    a.href = href;
     a.download = filename;
     document.body.appendChild(a);
     a.click();
-    setTimeout(() => a.remove(), 0);
+    a.remove();
   }
+  function openFileNewTab(href) { window.open(href, '_blank'); }
 
-  function openInNewTab(dataUrl) {
-    const w = window.open();
-    if (!w) {
-      alert('Popup blocked. Allow popups for this site and try again.');
-      return;
-    }
-    w.location = dataUrl;
-  }
+  dlSquare.addEventListener('click', () => downloadFile(BOOK_SQUARE, 'Spiders_Eight_Legs_of_Awesome_8p5x8p5.pdf'));
+  dlPortrait.addEventListener('click', () => downloadFile(BOOK_PORTRAIT, 'Spiders_Eight_Legs_of_Awesome_8x10.pdf'));
+  openSquare.addEventListener('click', () => openFileNewTab(BOOK_SQUARE));
+  openPortrait.addEventListener('click', () => openFileNewTab(BOOK_PORTRAIT));
 
-  // Audio
+  // ===== Audio =====
   const AudioFx = (() => {
     const ac = new (window.AudioContext || window.webkitAudioContext)();
     function play(freq = 440, duration = 0.12, type = 'sine', volume = 0.2) {
@@ -91,7 +85,7 @@
     };
   })();
 
-  // Store / State
+  // ===== Store / State =====
   const Store = {
     k: 'spiderQuestProgress_v2',
     load() {
@@ -137,7 +131,7 @@
     badgesEl.textContent = Array.from(State.badges).join(' • ');
   }
 
-  // Dashboard
+  // ===== Dashboard =====
   const modal = document.getElementById('modal');
   const btnDash = document.getElementById('btnDashboard');
   const btnClose = document.getElementById('closeModal');
@@ -176,7 +170,7 @@
     statBugs.textContent = (Data.bugScores.slice(-5).join(', ') || '-');
   }
 
-  // Scenes
+  // ===== Scenes =====
   function clear() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
   // Web Builder
@@ -442,13 +436,6 @@
   const btnBackyard = document.getElementById('btnBackyard');
   const btnQuiz = document.getElementById('btnQuiz');
   const btnReset = document.getElementById('btnReset');
-  const btnBooks = document.getElementById('btnBooks');
-  const modalBooks = document.getElementById('modalBooks');
-  const closeModalBooks = document.getElementById('closeModalBooks');
-  const dlSquare = document.getElementById('dlSquare');
-  const dlPortrait = document.getElementById('dlPortrait');
-  const openSquare = document.getElementById('openSquare');
-  const openPortrait = document.getElementById('openPortrait');
 
   let current = null;
   function setMode(mode) {
@@ -465,26 +452,6 @@
     Data.time = 0; Data.quizzes = 0; Data.correct = 0; Data.bugScores = []; Data.badges = [];
     Store.save(Data); State.badges.clear(); badgesEl.textContent = ''; factCard.textContent = 'Ready!';
     AudioFx.fail(); setMode('garden');
-  });
-
-  btnBooks.addEventListener('click', () => modalBooks.classList.remove('hidden'));
-  closeModalBooks.addEventListener('click', () => modalBooks.classList.add('hidden'));
-
-  dlSquare.addEventListener('click', () => {
-    if (!ensurePdfEmbed()) return alert('Embedded PDFs missing. Use the raw links below.');
-    downloadDataUrl('Spiders_Eight_Legs_of_Awesome_8p5x8p5.pdf', PDF_EMBED.square);
-  });
-  dlPortrait.addEventListener('click', () => {
-    if (!ensurePdfEmbed()) return alert('Embedded PDFs missing. Use the raw links below.');
-    downloadDataUrl('Spiders_Eight_Legs_of_Awesome_8x10.pdf', PDF_EMBED.portrait);
-  });
-  openSquare.addEventListener('click', () => {
-    if (!ensurePdfEmbed()) return alert('Embedded PDFs missing. Use the raw links below.');
-    openInNewTab(PDF_EMBED.square);
-  });
-  openPortrait.addEventListener('click', () => {
-    if (!ensurePdfEmbed()) return alert('Embedded PDFs missing. Use the raw links below.');
-    openInNewTab(PDF_EMBED.portrait);
   });
 
   // Canvas input

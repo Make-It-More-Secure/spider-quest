@@ -48,11 +48,11 @@
   </div>
 
   <!-- Dashboard Modal -->
-  <div id="modal" class="modal hidden">
+  <div id="modal" class="modal hidden" aria-hidden="true">
     <div class="modal-content">
       <div class="modal-header">
         <h2>Parent/Teacher Dashboard</h2>
-        <button id="closeModal" class="close">✕</button>
+        <button id="closeModal" class="close" aria-label="Close">✕</button>
       </div>
       <div class="modal-body">
         <section class="panel">
@@ -83,33 +83,28 @@
     </div>
   </div>
 
-  <!-- Books Modal -->
-  <div id="modalBooks" class="modal hidden">
+  <!-- Books Modal (plain file links, no encoding) -->
+  <div id="modalBooks" class="modal hidden" aria-hidden="true">
     <div class="modal-content">
       <div class="modal-header">
         <h2>Download the Books</h2>
-        <button id="closeModalBooks" class="close">✕</button>
+        <button id="closeModalBooks" class="close" aria-label="Close">✕</button>
       </div>
       <div class="modal-body" style="grid-template-columns:1fr;">
         <section class="panel">
           <h3>Choose a format</h3>
-          <p>Both options are embedded (works offline) and also available in the <code>/books</code> folder.</p>
-          <div style="display:flex; gap:12px; flex-wrap:wrap;">
-            <button id="dlSquare"   class="pill green">Download 8.5×8.5 (Square)</button>
-            <button id="openSquare" class="pill yellow">Open in New Tab (Square)</button>
-            <button id="dlPortrait" class="pill blue">Download 8×10 (Portrait)</button>
-            <button id="openPortrait" class="pill yellow">Open in New Tab (Portrait)</button>
-          </div>
-          <h4 style="margin-top:10px;">Direct File Links (Right-click → “Save Link As…”) </h4>
-          <ul>
-            <li><a href="./books/Spiders_Eight_Legs_of_Awesome_8p5x8p5.pdf" target="_blank">Open Raw File (Square)</a></li>
-            <li><a href="./books/Spiders_Eight_Legs_of_Awesome_8x10.pdf" target="_blank">Open Raw File (Portrait)</a></li>
-          </ul>
-        </section>
-      </div>
-    </div>
-  </div>
+          <p>These buttons use plain file links from the <code>/books</code> folder.</p>
 
-  <script src="script.js"></script>
-</body>
-</html>
+          <div class="book-actions">
+            <div class="book-col">
+              <h4>8.5×8.5 (Square)</h4>
+              <button id="dlSquare"   class="pill green">Download</button>
+              <button id="openSquare" class="pill yellow">Open in New Tab</button>
+              <p><a href="./books/Spiders_Eight_Legs_of_Awesome_8p5x8p5.pdf" target="_blank">Direct link</a></p>
+            </div>
+
+            <div class="book-col">
+              <h4>8×10 (Portrait)</h4>
+              <button id="dlPortrait"   class="pill blue">Download</button>
+              <button id="openPortrait" class="pill yellow">Open in New Tab</button>
+              <p><a href="./books/Spiders_Eight_Legs_of_Awesome_8x10.pdf" target="_blank">Direct link</a></p>
